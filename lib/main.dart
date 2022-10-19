@@ -1,4 +1,6 @@
+import 'package:caw_studio/core/theme/color.dart';
 import 'package:caw_studio/features/authentication/presentation/sign_up_screen.dart';
+import 'package:caw_studio/features/home/presentation/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,9 +18,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         textTheme: GoogleFonts.interTextTheme(),
-        primaryColor: const Color(0xff00A981),scaffoldBackgroundColor: Color(0xFFE5E5E5)
+        primaryColor:colorPrimary,scaffoldBackgroundColor: scaffoldBackgroundColor
       ),
-      home:  const SignUpScreen(),
+      home:  const HomePage(),
     );
   }
 }

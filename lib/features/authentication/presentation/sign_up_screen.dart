@@ -4,16 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
+import '../../../core/theme/color.dart';
 import '../../../generated/assets.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpState extends State<SignUp> {
   late SignUpCubit signUpCubit;
 
   @override
@@ -76,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: Theme.of(context).textTheme.headline4?.copyWith(
                             fontWeight: FontWeight.w700,
                             fontSize: 30,
-                            color: Color(0xFF545B63)),
+                            color: darkGrey),
                       ),
                     ),
                     SizedBox(
@@ -98,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return InternationalPhoneNumberInput(
                           onInputChanged: (PhoneNumber value) {
                             signUpCubit.addNumber(value.phoneNumber ?? "");
-                            print(value);
+                            signUpCubit.changeCountryCode(value.dialCode ?? "");
                           },
                           ignoreBlank: false,
                           autoValidateMode: AutovalidateMode.disabled,
@@ -122,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Text(
                         "We never compromise on security!\nHelp us create a safe place by providing your mobile number to maintain authenticity.",
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: Color(0xffA5B1C2),
+                              color: lightGrey,
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
                             ),
@@ -133,20 +134,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     Container(
                       alignment: Alignment.center,
-                      child: StreamBuilder<String?>(
-                          stream: signUpCubit.phoneNumber,
+                      child: StreamBuilder<bool>(
+                          stream: signUpCubit.isValidData,
                           initialData: null,
                           builder: (context, snapshot) {
+                            print("snapshot dta is ${snapshot.data}");
                             return ElevatedButton(
                               onPressed:
-                                  snapshot.data == null || snapshot.hasError
-                                      ? null
-                                      : signUpCubit.sendOTP(),
+                                  snapshot.data==null?null : (){
+                                    signUpCubit.sendOTP();
+                                  },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       Theme.of(context).primaryColor,
                                   disabledBackgroundColor:
-                                      const Color(0xffe8ebef),
+                                       buttonDisabledColor,
                                   elevation: 1,
                                   minimumSize: const Size(107, 51),
                                   shape: RoundedRectangleBorder(
@@ -161,9 +163,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ?.copyWith(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w700,
-                                        color: snapshot.data == null ||
-                                                snapshot.hasError
-                                            ? Color(0xFFA5B1C2)
+                                        color: snapshot.data == null
+                                            ? lightGrey
                                             : Colors.white),
                               ),
                             );

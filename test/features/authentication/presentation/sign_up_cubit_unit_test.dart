@@ -35,5 +35,11 @@ void main() {
       signUpCubit.addNumber("123123213");
       signUpCubit.changeCountryCode("+91");
     });
+
+    // test('check_If_added_data_Is_invalid', () {
+    //   expectLater(signUpCubit.isValidData, emits(isA<SignUpErrorState>()));
+    //   signUpCubit.addNumber("1213");
+    //   signUpCubit.changeCountryCode("+91");
+    // });
   });
 }
