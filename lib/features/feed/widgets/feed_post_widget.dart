@@ -1,8 +1,11 @@
 import 'package:caw_studio/core/theme/color.dart';
-import 'package:caw_studio/features/authentication/domain/entiity/feed_post_ui_entity.dart';
+import 'package:caw_studio/features/feed/widgets/share_bottom_sheet.dart';
 import 'package:caw_studio/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../domain/entity/feed_post_ui_entity.dart';
+
 
 class FeedPostWidget extends StatefulWidget {
   final FeedPostUIEntity feedPostUIEntity;
@@ -102,7 +105,12 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                 child: IconButton(onPressed: (){}, icon: const Icon(Icons.bookmark_outline,color: darkGrey,size: 20,)),
               ),
               Expanded(
-                child: IconButton(onPressed: (){}, icon: const Icon(Icons.share_outlined,color: darkGrey,size: 20,)),
+                child: IconButton(onPressed: (
+                    ){
+                   showModalBottomSheet(context: context, builder:(BuildContext context) {
+                    return  ShareBottomSheet();
+                   });
+                }, icon: const Icon(Icons.share_outlined,color: darkGrey,size: 20,)),
               ),
             ],
           )

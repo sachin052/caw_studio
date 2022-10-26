@@ -4,7 +4,10 @@ import 'package:caw_studio/features/home/presentation/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'injector.dart';
+
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
